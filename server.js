@@ -2,8 +2,8 @@
 var http = require('https');
 var fs = require('fs');
 var url = require('url');
-var twitter = require('twitter');
-
+var Twitter = require('twitter');
+var Keys = require('./keys.js');
 
 
 var options = {
@@ -36,6 +36,7 @@ function requestHandler(req, res){
 
 //Twitter portion
 
+//Twitter configuration
 var twitter_client = new Twitter({
 
 	consumer_key: Keys.consumer_key,
@@ -44,6 +45,34 @@ var twitter_client = new Twitter({
 	access_token_secret: Keys.access_token_secret
 
 });
+
+// scraping tweets for #'tags'
+twitter_client.get('search/tweets', {q:"#witness"}, function(error, tweets, response){
+	
+	console.log(tweets);
+
+	//pick a tweet at random
+	var tweet = tweets.statuses[Math.floor(Math.random()*tweets.statuses.length)];
+
+
+	//post a reply to 
+	client.post('statuses/update', {status: "@"+tweet.user.screen_name+" we're broadcasting you now", in_reply_to_status_id: tweet.in_reply_to_status_id				
+									}, function(error, tweet, response) {
+										if (!error) {
+											console.log(tweet);
+										} else {
+											console.log(error);
+										}
+									});
+
+
+});
+
+
+
+
+
+
 
 
 
