@@ -2,6 +2,7 @@
 var http = require('https');
 var fs = require('fs');
 var url = require('url');
+var twitter = require('twitter');
 
 
 
@@ -29,7 +30,20 @@ function requestHandler(req, res){
 					res.writeHead(200);
 					res.end(data);
 
-
 		}
 
-};
+)};
+
+//Twitter portion
+
+var twitter_client = new Twitter({
+
+	consumer_key: Keys.consumer_key,
+	consumer_secret: Keys.consumer_secret,
+	access_token: Keys.access_token_key,
+	access_token_secret: Keys.access_token_secret
+
+});
+
+
+
