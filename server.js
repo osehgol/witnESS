@@ -3,11 +3,12 @@ var http = require('https');
 var fs = require('fs');
 var url = require('url');
 var Twitter = require('twitter');
-var Keys = require('./keys.js');
-
+//var Keys = require('./keys.js');
+var oauth = require('oauth');
 
 var options = {
-
+  key: fs.readFileSync('my-key.pem'),
+  cert: fs.readFileSync('my-cert.pem')
 };
 
 var httpServer = http.createServer(options, requestHandler);
@@ -39,10 +40,10 @@ function requestHandler(req, res){
 //Twitter configuration
 var twitter_client = new Twitter({
 
-	consumer_key: Keys.consumer_key,
-	consumer_secret: Keys.consumer_secret,
-	access_token: Keys.access_token_key,
-	access_token_secret: Keys.access_token_secret
+	consumer_key: 'ZWdQIOm2KCxKuaoV1foqkA4Yn',
+	consumer_secret: 'iOVj78uN3GY63k181ZxjOCQf1gWy5cw2oEsHGt2Gn9PJ4RwzIq',
+	access_token: '102290558-Wb0q9Hm4Jvp9LtLigSFF8RDXWJeA6qG6KrHKRhZ8',
+	access_token_secret: 'JtZzfuWC3OAGkUxvLzG57C0YSA7J8oITjLLIEcSTuxmkW'
 
 });
 
@@ -52,24 +53,21 @@ twitter_client.get('search/tweets', {q:"#witness"}, function(error, tweets, resp
 	console.log(tweets);
 
 	//pick a tweet at random
-	var tweet = tweets.statuses[Math.floor(Math.random()*tweets.statuses.length)];
+	// var tweet = tweets.statuses[Math.floor(Math.random()*tweets.statuses.length)];
 
 
-	//post a reply to 
-	client.post('statuses/update', {status: "@"+tweet.user.screen_name+" we're broadcasting you now", in_reply_to_status_id: tweet.in_reply_to_status_id				
-									}, function(error, tweet, response) {
-										if (!error) {
-											console.log(tweet);
-										} else {
-											console.log(error);
-										}
-									});
+	// // post a reply to 
+	// client.post('statuses/update', {status: "@"+tweet.user.screen_name+" we're broadcasting you now", in_reply_to_status_id: tweet.in_reply_to_status_id				
+	// 								}, function(error, tweet, response) {
+	// 									if (!error) {
+	// 										console.log(tweet);
+	// 									} else {
+	// 										console.log(error);
+	// 									}
+	// 								});
 
 
-});
-
-
-
+ });
 
 
 
