@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" style= "font-size: 30px; align: center"/>
+
+<script type="text/javascript">
+	
+//window.onload = init();
+
+var myvideo = null;
+var mystream = null;
+var counter = 0;
+var text;
+var socket = io.connect();
+
+
+
+	window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+
+	//Using mediaDevices.getUserMedia https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+	var p = navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+	console.log(p);
+
+		p.then(function(stream) {
+			mystream = stream;
+
+			myvideo = document.getElementById('my-video');
+			
+			myvideo.src = window.URL.createObjectURL(mystream) || mystream;
+			console.log(myvideo.src);
+			myvideo.play();
+
+		}); //p.then() close	
+
+		p.catch(function(err) { console.log(err.name); }); // always check for errors at the end.
+
+		
+function record(){
+	text = document.getElementById('message').value;
+}
+
+function checkSubmit(e){
+	if(e && e.keyCode == 13){
+		record();
+	}
+}
+
+
+
+</script>
+
+	<title></title>
+</head>
+<body>
+
+
+<video id="my-video" muted></video>
+<input type="text" placeholder="#witness" id="message" class="form-control" onKeyPress="return checkSubmit(event)"></input>
+<button class="btn-outline" onclick="record()">search</button>
+
+<div id="witnessmessage"></div>
+
+</body>
+</html>
