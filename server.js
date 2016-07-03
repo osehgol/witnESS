@@ -78,7 +78,7 @@ twitter_client.get('search/tweets', {q:'#witness'}, function(error, tweets, resp
 //socket portion
 var io = require('socket.io').listen(httpServer);
 
-io.socket.on('connection', function(socket){
+io.sockets.on('connection', function(socket){
 
 	socket.on('hash-tag-search', function(data){
 	console.log(data);
